@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Välkommen till Personregistret</h2>
+    <p>Här kan du hantera information om personer i företaget.</p>
+    <a href="{{ url_for('persons') }}">Visa alla personer</a>
+{% endblock %}
