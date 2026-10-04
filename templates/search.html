@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Sök anställd</h1>
+</div>
+
+<form method="GET" action="{{ url_for('search') }}" class="search-form">
+    <div class="search-input-group">
+        <input type="text" name="q" value="{{ query }}" placeholder="Sök på namn, e-post, anst.nr eller cargo..." autofocus>
+        <button type="submit" class="btn btn-primary">Sök</button>
+    </div>
+</form>
+
+{% if query %}
+    <h2>Sökresultat för "{{ query }}" ({{ results|length }} träffar)</h2>
+    {% if results %}
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Namn</th>
+                        <th>Anst.nr</th>
+                        <th>E-post</th>
+                        <th>Cargo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for emp in results %}
+                    <tr>
+                        <td><a href="{{ url_for('employee_detail', id=emp.id) }}">{{ emp.first_name }} {{ emp.last_name }}</a></td>
+                        <td>{{ emp.employee_number }}</td>
+                        <td>{{ emp.email }}</td>
+                        <td>{{ emp.position }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-muted">Inga anställda matchade din sökning.</p>
+    {% endif %}
+{% endif %}
+{% endblock %}

@@ -3,21 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personregister</title>
+    <title>Personalregister - JYSK</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <h1>Personregister</h1>
+        <div class="container header-content">
+            <a href="{{ url_for('index') }}" class="logo">JYSK <span>Personal</span></a>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Alla anställda</a></li>
+                    <li><a href="{{ url_for('add_employee') }}">Lägg till</a></li>
+                    <li><a href="{{ url_for('search') }}">Sök</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
-    <nav>
-        {% include 'navbar.html' %}
-    </nav>
-    <main>
+
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
         {% block content %}{% endblock %}
     </main>
+
     <footer>
-        {% include 'footer.html' %}
+        <div class="container">
+            <p>&copy; 2026 JYSK Personalregister. Alla rättigheter förbehållna.</p>
+        </div>
     </footer>
 </body>
 </html>

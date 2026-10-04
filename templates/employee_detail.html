@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{{ employee.first_name }} {{ employee.last_name }}</h1>
+    <div class="header-actions">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">← Tillbaka</a>
+        <form action="{{ url_for('delete_employee', id=employee.id) }}" method="POST" onsubmit="return confirm('Är du säker?');">
+            <button type="submit" class="btn btn-danger">Ta bort anställd</button>
+        </form>
+    </div>
+</div>
+
+<div class="detail-card">
+    <div class="detail-grid">
+        <div class="detail-item">
+            <span class="detail-label">Anställningsnummer</span>
+            <span class="detail-value">{{ employee.employee_number }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">E-post</span>
+            <span class="detail-value">{{ employee.email }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Ålder</span>
+            <span class="detail-value">{{ employee.age }} år</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Kön</span>
+            <span class="detail-value">{{ employee.gender }}</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Cargo / Position</span>
+            <span class="detail-value">{{ employee.position }}</span>
+        </div>
+    </div>
+</div>
+
+<div class="comments-section">
+    <h2>Kommentarer</h2>
+
+    <form method="POST" class="comment-form">
+        <div class="form-group">
+            <textarea name="comment_text" rows="3" placeholder="Skriv en kommentar om den anställda..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Lägg till kommentar</button>
+    </form>
+
+    <div class="comments-list">
+        {% for comment in employee.comments|sort(attribute='created_at', reverse=True) %}
+        <div class="comment">
+            <p>{{ comment.text }}</p>
+            <small>{{ comment.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+        </div>
+        {% else %}
+        <p class="text-muted">Inga kommentarer ännu.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

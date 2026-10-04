@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Alla anställda</h1>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Namn</th>
+                <th>Anst.nr</th>
+                <th>E-post</th>
+                <th>Ålder</th>
+                <th>Kön</th>
+                <th>Cargo</th>
+                <th>Åtgärder</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emp in employees %}
+            <tr>
+                <td><a href="{{ url_for('employee_detail', id=emp.id) }}">{{ emp.first_name }} {{ emp.last_name }}</a></td>
+                <td>{{ emp.employee_number }}</td>
+                <td>{{ emp.email }}</td>
+                <td>{{ emp.age }}</td>
+                <td>{{ emp.gender }}</td>
+                <td>{{ emp.position }}</td>
+                <td>
+                    <form action="{{ url_for('delete_employee', id=emp.id) }}" method="POST" onsubmit="return confirm('Är du säker på att du vill ta bort {{ emp.first_name }} {{ emp.last_name }}?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Ta bort</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7" class="text-center">Inga anställda hittades. <a href="{{ url_for('add_employee') }}">Lägg till en</a>.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div> <!-- HÄR stänger vi table-container (den vita rutan) -->
+
+<!-- Knappen ligger nu UTANFÖR den vita rutan och är centrerad -->
+<div class="action-footer-centered">
+    <a href="{{ url_for('add_employee') }}" class="btn btn-primary">+ Lägg till ny</a>
+</div>
+
+{% endblock %}

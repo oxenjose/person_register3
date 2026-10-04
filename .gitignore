@@ -1,0 +1,34 @@
+# --- Virtuell miljö ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Python cache ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# --- Flask / Databas ---
+instance/
+*.db
+*.sqlite
+*.sqlite3
+
+# --- Miljövariabler och hemligheter ---
+.env
+.env.local
+*.env
+
+# --- Editor / IDE ---
+.vscode/
+.idea/
+*.swp
+
+# --- Operativsystem ---
+.DS_Store
+Thumbs.db
+
+# --- Loggar ---
+*.log
